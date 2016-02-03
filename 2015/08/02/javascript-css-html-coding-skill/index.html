@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>编写良好javascript,css,html的方法技巧（持续更新……） | One Step To</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="baidu-site-verification" content="dTVxXStghn" />
+  <meta name="description" content="在平时的网站开发过程中，常常会不经意get到一些编写代码的小方法和小技巧，在此整理收录，方便查阅，内容持续更新，主要分为javascript，css，html部分欢迎收藏
+Javascript编写技巧1.注意标识符提升陷阱
+12345678var a = 1;function fn() &amp;#123;    if (!a) &amp;#123;        var a = 2;//2    &amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写良好javascript,css,html的方法技巧（持续更新……）">
+<meta property="og:url" content="http://onestepto.cn/2015/08/02/javascript-css-html-coding-skill/index.html">
+<meta property="og:site_name" content="One Step To">
+<meta property="og:description" content="在平时的网站开发过程中，常常会不经意get到一些编写代码的小方法和小技巧，在此整理收录，方便查阅，内容持续更新，主要分为javascript，css，html部分欢迎收藏
+Javascript编写技巧1.注意标识符提升陷阱
+12345678var a = 1;function fn() &amp;#123;    if (!a) &amp;#123;        var a = 2;//2    &amp;#125;">
+<meta property="og:updated_time" content="2015-11-08T17:16:39.851Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编写良好javascript,css,html的方法技巧（持续更新……）">
+<meta name="twitter:description" content="在平时的网站开发过程中，常常会不经意get到一些编写代码的小方法和小技巧，在此整理收录，方便查阅，内容持续更新，主要分为javascript，css，html部分欢迎收藏
+Javascript编写技巧1.注意标识符提升陷阱
+12345678var a = 1;function fn() &amp;#123;    if (!a) &amp;#123;        var a = 2;//2    &amp;#125;">
+  
+    <link rel="alternative" href="/atom.xml" title="One Step To" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/user_ic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">One Step To</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+		
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">存档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							<div align="center"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3194371&c=9583426" alt="AmazingCounters.com"></div>
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/Css/" style="font-size: 10px;">Css</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Requirejs/" style="font-size: 10px;">Requirejs</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/css3/" style="font-size: 10px;">css3</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/指令/" style="font-size: 10px;">指令</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">One Step To</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/user_ic.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">One Step To</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">存档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-javascript-css-html-coding-skill" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/02/javascript-css-html-coding-skill/" class="article-date">
+  	<time datetime="2015-08-02T05:50:11.000Z" itemprop="datePublished">2015-08-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编写良好javascript,css,html的方法技巧（持续更新……）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在平时的网站开发过程中，常常会不经意get到一些编写代码的小方法和小技巧，在此整理收录，方便查阅，内容持续更新，主要分为javascript，css，html部分欢迎收藏</p>
+<h2 id="Javascript编写技巧">Javascript编写技巧</h2><p>1.注意标识符提升陷阱</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var a = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">()</span> &#123;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="params">(!a)</span> &#123;</span><br><span class="line">        var a = <span class="number">2</span>;<span class="comment">//2</span></span><br><span class="line">    &#125;</span><br><span class="line">    console.<span class="built_in">log</span><span class="params">(a)</span>;</span><br><span class="line">&#125;</span><br><span class="line">fn<span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">fn();</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"1"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line"><span class="keyword">var</span> a = <span class="string">"2"</span>;</span><br><span class="line"><span class="keyword">var</span> c = a;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">//function a();      </span></span><br><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">//2    </span></span><br><span class="line">&#125;</span><br><span class="line">fn();</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>通过上面三个例子可以感受到，js不存在块级变量(除了es6的let外),变量的定义会提前,不存在块级变量，如var,function的等对象的定义,定义都会被提升到首位执行。<br>2.特性检测而非浏览器检测</p>
+<p>一般来说基于用户客户端执行不同动作的判断不应该是通过判断浏览器版本来实现，我们一般是通过一些特性检测的方式来实现，如JQ源码中的on/bind等绑定方法的实现便是通过<code>addEventListener/attachEvent</code>的特性检测来实现的<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="params">( elem.addEventListener )</span>&#123;</span><br><span class="line">    elem.addEventListener<span class="params">( type, eventHandle, <span class="literal">false</span> )</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.使用!!和+进行类型转换</p>
+<p>javascript是一门弱类型的语言，通常我们在编写javascript代码时往往会用到许多类型转换的东西，对于string,number等基础类型，==和===是有区别的，对于Array,Object等高级类型，==和===是没有区别的，这时我们就可以通过javascript的类型转换技巧来实现判断</p>
+<a id="more"></a>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span>=<span class="string">"100"</span>,num=<span class="number">100</span>;</span><br><span class="line">    console.<span class="built_in">log</span><span class="params">(str===num)</span>;<span class="comment">//false</span></span><br><span class="line">    console.<span class="built_in">log</span><span class="params">(<span class="params">(+str)</span>===num)</span>;<span class="comment">//true</span></span><br><span class="line">    console.<span class="built_in">log</span><span class="params">(typeof<span class="params">(+str)</span>)</span>;<span class="comment">//number +可以把字符串转化为number型 </span></span><br><span class="line">    console.<span class="built_in">log</span><span class="params">(typeof<span class="params">(!!str)</span>)</span><span class="comment">//boolea !!可以将任一个对象转化为boolea型</span></span><br></pre></td></tr></table></figure>
+<p>4.“[ ]“方括号记法</p>
+<p>如果使用”.”号，属性名是硬代码，不能在执行时改变。如果使用”[ ]“方括号，属性名是一个通过计算属性名而来的字符串。 如果你有 “value1″, “value2″, 和 “value3″这样的属性，你可以通过定义一个变量i=1来动态访问你需要的属性，只需<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">MyObject</span>[<span class="string">"value"</span>+<span class="atom">i</span>]</span><br></pre></td></tr></table></figure></p>
+<p>5.避免 ‘eval’<br>eval()功能是一个在执行期中执行任意代码的方法,因此在执行环境中会改变作用域(jshint中不建议使用)<br>改变局部作用域<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">eval</span>(<span class="string">'foo = 3'</span>);</span><br><span class="line"><span class="keyword">return</span> foo;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test()); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure></p>
+<p>改变全局作用域<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">window</span>.eval(<span class="string">'foo = 3'</span>);</span><br><span class="line"><span class="keyword">return</span> foo;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test()); <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure></p>
+<p>eval可以用来解析json数据(一般使用JSON.parse)，如<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>(<span class="string">"("</span> + json + <span class="string">")"</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>eval存在安全问题，因为它可以执行传给它的任何字符串，所以永远不要传入字符串或者来历不明和不受信任源的参数。</p>
+<p>6.避免 ‘with’</p>
+<p>Javascript 中的 with 通常作为一个延长作用域链的方法，作用就是就是引用对象，并对该对象上的属性进行操作，其作用是可以省略重复书写该对象名称，起到简化书写的作用。</p>
+<ul>
+<li>with代码块中，javascript引擎对变量的处理方式是：先查找是不是该对象的属性，如果是，则停止。如果不是继续查找是不是局部变量。</li>
+<li>就算在with语句中使用 var 运算符重新定义变量（该变量是with引用对象的属性），如果该属性是可写属性，那么也会给对象的属性赋值。</li>
+<li>如果你想通过with语句，对引用对象添加多个属性，并为每个属性赋值，这是不可能的！也就是说，要赋值的只能是对象已经存在并且可以写入的属性（不能是只读属性）。<br>通过下面的两个例子可以感受一下<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o=&#123;href:<span class="string">"sssss"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> href=<span class="string">"1111"</span>;</span><br><span class="line">function buildUrl()&#123;</span><br><span class="line">     <span class="keyword">var</span> qs=<span class="string">"?"</span>;     </span><br><span class="line">     <span class="keyword">with</span>(o)&#123;</span><br><span class="line">          href=<span class="string">"2222"</span>;</span><br><span class="line">          <span class="keyword">var</span> url=href+qs;</span><br><span class="line">     &#125;    </span><br><span class="line">     <span class="keyword">return</span> url;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> <span class="literal">result</span>=buildUrl();</span><br><span class="line">console.log(<span class="literal">result</span>);//<span class="number">2222</span>?</span><br><span class="line">console.log(href);//<span class="number">1111</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o=&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> href=<span class="string">"1111"</span>;</span><br><span class="line">function buildUrl()&#123;</span><br><span class="line">     <span class="keyword">var</span> qs=<span class="string">"?"</span>;     </span><br><span class="line">     <span class="keyword">with</span>(o)&#123;</span><br><span class="line">          href=<span class="string">"2222"</span>;</span><br><span class="line">          <span class="keyword">var</span> url=href+qs;</span><br><span class="line">     &#125;    </span><br><span class="line">     <span class="keyword">return</span> url;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> <span class="literal">result</span>=buildUrl();</span><br><span class="line">console.log(<span class="literal">result</span>);//<span class="number">2222</span>?</span><br><span class="line">console.log(href);//<span class="number">2222</span></span><br></pre></td></tr></table></figure>
+<p>为啥要避免呢~主要是容易造成作用域链混乱，毕竟javascript中本来就没有块级作用域的定义，故容易造成一些问题。</p>
+<p>7.避免乱用全局命名空间</p>
+<p>一般很少需要全部变量和函数。全局使用将可能导致 Javascript 源文件文档冲突，和代码中止。因此，一个好的做法是在一个全局命名空间内采用函数性的封装。<br>如通过闭包定义：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> NameSpace = <span class="built_in">window</span>.NameSpace || &#123;&#125;;</span><br><span class="line">NameSpace.Hello = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">'world'</span>;</span><br><span class="line">  <span class="keyword">var</span> sayHello = <span class="function"><span class="keyword">function</span>(<span class="params">_name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello '</span> + (_name || name);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    sayHello: sayHello</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure></p>
+<p>不通过闭包：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> NameSpace = <span class="built_in">window</span>.NameSpace || &#123;&#125;;</span><br><span class="line">NameSpace.Hello = <span class="keyword">new</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">'world'</span>;</span><br><span class="line">  self.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params">_name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello '</span> + (_name || name);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>8.获取浏览器版本信息判断移动端版本信息</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> browser=&#123;</span><br><span class="line">    versions:function()&#123;</span><br><span class="line">           <span class="keyword">var</span> <span class="keyword">u</span> = navigator.userAgent, <span class="keyword">app</span> = navigator.appVersion;</span><br><span class="line">           <span class="keyword">return</span> &#123;<span class="comment">//移动终端浏览器版本信息</span></span><br><span class="line">                trident: <span class="keyword">u</span>.indexOf('Trident') &gt; -1, <span class="comment">//IE内核</span></span><br><span class="line">                presto: <span class="keyword">u</span>.indexOf('Presto') &gt; -1, <span class="comment">//opera内核</span></span><br><span class="line">                webKit: <span class="keyword">u</span>.indexOf('AppleWebKit') &gt; -1, <span class="comment">//苹果、谷歌内核</span></span><br><span class="line">                gecko: <span class="keyword">u</span>.indexOf('Gecko') &gt; -1 &amp;&amp; <span class="keyword">u</span>.indexOf('KHTML') == -1, <span class="comment">//火狐内核</span></span><br><span class="line">                mobile: !!<span class="keyword">u</span>.<span class="literal">match</span>(/AppleWebKit.*Mobile.*/)||!!<span class="keyword">u</span>.<span class="literal">match</span>(/AppleWebKit/), <span class="comment">//是否为移动终端</span></span><br><span class="line">                ios: !!<span class="keyword">u</span>.<span class="literal">match</span>(/\(i[^;]+;( <span class="keyword">U</span>;)? CPU.+<span class="keyword">Mac</span> OS X/), <span class="comment">//ios终端</span></span><br><span class="line">                android: <span class="keyword">u</span>.indexOf('Android') &gt; -1 || <span class="keyword">u</span>.indexOf('Linux') &gt; -1, <span class="comment">//android终端或者uc浏览器</span></span><br><span class="line">                iPhone: <span class="keyword">u</span>.indexOf('iPhone') &gt; -1 || <span class="keyword">u</span>.indexOf('<span class="keyword">Mac</span>') &gt; -1, <span class="comment">//是否为iPhone或者QQHD浏览器</span></span><br><span class="line">                iPad: <span class="keyword">u</span>.indexOf('iPad') &gt; -1, <span class="comment">//是否iPad</span></span><br><span class="line">                webApp: <span class="keyword">u</span>.indexOf('Safari') == -1 <span class="comment">//是否web应该程序，没有头部与底部</span></span><br><span class="line">            &#125;;</span><br><span class="line">         &#125;(),</span><br><span class="line">         language:(navigator.browserLanguage || navigator.language).toLowerCase()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>9.使用局部变量缓存变化的值或者全局变量</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//差的实践</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">query</span> = <span class="keyword">window</span>.location.href.substring(<span class="keyword">window</span>.location.href.indexOf(<span class="string">"?"</span>)); </span><br><span class="line"><span class="comment">//最佳实践</span></span><br><span class="line"><span class="keyword">var</span> url = <span class="keyword">window</span>.location.href;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">query</span> = url.substring(url.indexOf(<span class="string">"?"</span>));</span><br></pre></td></tr></table></figure>
+<p>历遍元素时<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//差的实践</span></span><br><span class="line">for<span class="comment">(var i=0;i&lt;data.length;i++)</span>&#123;</span><br><span class="line">	visit<span class="comment">(data[i])</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//最佳实践</span></span><br><span class="line">for<span class="comment">(var i=data.length;i&gt;0;i--)</span>&#123;</span><br><span class="line">	visit<span class="comment">(data[i])</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>10.操作页面DOM结构操作大量元素时，尽量用innerHTML，而不要用createElement()和appendChild()</p>
+<p>字符串拼接比每次dom操作资源消耗低并且使用innerHTML，会创建一个HTML解析器，然后使用内部的DOM调用来创建DOM结构而不是使用js内部的dom结构操作，效率更佳</p>
+<p>11.减少重排、重绘优化性能</p>
+<p>浏览器下载完页面中的所有组件—-HTML标记，Js，CSS，图片等之后会解析并生成两个内部数据结构：</p>
+<ul>
+<li><p>DOM树  ——– 表示页面结构</p>
+</li>
+<li><p>渲染树   ——– 表示DOM节点如何显示</p>
+</li>
+</ul>
+<p>当DOM的变化影响了元素的几何属性(宽和高)，浏览器需要重新计算元素的几何属性，同样其他元素的几何属性和位置也会因此受到影响。</p>
+<ul>
+<li><p>重排：浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。</p>
+</li>
+<li><p>重绘：完成重排后，浏览器会重新绘制受影响的部分到屏幕中。</p>
+<p>重排何时发生：</p>
+</li>
+<li><p>添加或删除可见的DOM元素</p>
+</li>
+<li>元素位置的改变</li>
+<li>元素尺寸改变</li>
+<li>内容改变</li>
+<li>页面渲染器初始化</li>
+<li>浏览器窗口尺寸的改变</li>
+</ul>
+<p>有效避免过多的重排能提高页面性能和用户体验</p>
+<p>技巧1:平时我们在用js对DOM进行操作时，常常会遇到要操作页面样式的情况，很多新手程序员常常喜欢在操作样式时直接对元素某一个样式进行修改，如在JQuery中使用<code>.css()</code>的语法修改样式，这样往往会引起页面的多次重排，有的浏览器进行了优化，在一般不会立即执行这些结果，会等到足够多的dom操作，或者一定时间之后再一起处理重排，但这样做还会是造成程序的高耦合，所以一般应该采用添加样式的方式来改变页面样式提高性能。</p>
+<p>技巧2:在对某些需要操作大量DOM的节点先隐藏后进行操作，操作完再显示出来，这样发生的重排次数只会是两次</p>
+<p>技巧3:每次获取offsettop、offsetleft、offsetwidth，srcolltop、clientleft等一些属性，浏览器都要重排（为了精确定位元素位置）,遇到需要重复用到的值可以用局部变量缓存起来，减少这些属性的获取也是优化性能的一个好的实践</p>
+<p>12.function表达式和function语句的区别</p>
+<p>观察如下的两段代码<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a=<span class="number">10</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a1</span><span class="params">()</span>&#123;</span></span><br><span class="line">  a=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">a1<span class="params">()</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//4</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a1</span><span class="params">()</span>&#123;</span></span><br><span class="line">  a=<span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line">a1<span class="params">()</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//4</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a=<span class="number">10</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//10</span></span><br><span class="line">var a1=<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;</span></span><br><span class="line">  a=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">a1<span class="params">()</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//2</span></span><br><span class="line">var a1=<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;</span></span><br><span class="line">  a=<span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line">a1<span class="params">()</span>;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(a)</span>;<span class="comment">//4</span></span><br></pre></td></tr></table></figure>
+<p>javascript语言中的function语句在解析时会发生被提升的情况。这意味着不管function被放置在哪里，它都会被移动到被定义时所在的作用域顶层，这放宽了函数必须先声明后使用的要求，但这将会导致混乱。在if语句中使 function语句也是被禁止的。结果表明大多数浏览器都允许在if语句里使用function语句，但它们在解析时的处理上各不相同，这就造成了移植性问题。因此我们推荐使用var表达式犹豫声明方式创建函数。</p>
+<h2 id="CSS编写技巧">CSS编写技巧</h2><p>1.掌握Sass或者Less来开发你网页的css样式</p>
+<p>sass和less引入了css编程的概念，学会他们能大大加快你css编写的速度以及可靠性</p>
+<p><a href="http://www.w3cplus.com/sassguide/" target="_blank" rel="external">sass学习地址</a></p>
+<p><a href="http://less.bootcss.com/" target="_blank" rel="external">less学习地址</a></p>
+<p>2.引入CSS reset（CSS 重设）</p>
+<p>CSS reset的优势是避免了浏览器的不兼容，并且能对你网页上的dom元素样式进行初始化，让你能够随心所欲的使用各类标签而不必担心默认样式问题，可以到网上搜阅别人写好的reset函数，当然也可以自己定义<br>例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">html</span>, <span class="tag">body</span>, <span class="tag">div</span>, <span class="tag">span</span>, <span class="tag">applet</span>, <span class="tag">object</span>, <span class="tag">iframe</span>,</span><br><span class="line"><span class="tag">h1</span>, <span class="tag">h2</span>, <span class="tag">h3</span>, <span class="tag">h4</span>, <span class="tag">h5</span>, <span class="tag">h6</span>, <span class="tag">p</span>, <span class="tag">blockquote</span>, <span class="tag">pre</span>,</span><br><span class="line"><span class="tag">a</span>, <span class="tag">abbr</span>, <span class="tag">acronym</span>, <span class="tag">address</span>, <span class="tag">big</span>, <span class="tag">cite</span>, <span class="tag">code</span>,</span><br><span class="line"><span class="tag">del</span>, <span class="tag">dfn</span>, <span class="tag">em</span>, <span class="tag">img</span>, <span class="tag">ins</span>, <span class="tag">kbd</span>, <span class="tag">q</span>, <span class="tag">s</span>, <span class="tag">samp</span>,</span><br><span class="line"><span class="tag">small</span>, <span class="tag">strike</span>, <span class="tag">strong</span>, <span class="tag">sub</span>, <span class="tag">sup</span>, <span class="tag">tt</span>, <span class="tag">var</span>,</span><br><span class="line"><span class="tag">b</span>, <span class="tag">u</span>, <span class="tag">i</span>, <span class="tag">center</span>,</span><br><span class="line"><span class="tag">dl</span>, <span class="tag">dt</span>, <span class="tag">dd</span>, <span class="tag">ol</span>, <span class="tag">ul</span>, <span class="tag">li</span>,</span><br><span class="line"><span class="tag">fieldset</span>, <span class="tag">form</span>, <span class="tag">label</span>, <span class="tag">legend</span>,</span><br><span class="line"><span class="tag">table</span>, <span class="tag">caption</span>, <span class="tag">tbody</span>, <span class="tag">tfoot</span>, <span class="tag">thead</span>, <span class="tag">tr</span>, <span class="tag">th</span>, <span class="tag">td</span>,</span><br><span class="line"><span class="tag">article</span>, <span class="tag">aside</span>, <span class="tag">canvas</span>, <span class="tag">details</span>, <span class="tag">embed</span>, </span><br><span class="line"><span class="tag">figure</span>, <span class="tag">figcaption</span>, <span class="tag">footer</span>, <span class="tag">header</span>, <span class="tag">hgroup</span>, </span><br><span class="line"><span class="tag">menu</span>, <span class="tag">nav</span>, <span class="tag">output</span>, <span class="tag">ruby</span>, <span class="tag">section</span>, <span class="tag">summary</span>,</span><br><span class="line"><span class="tag">time</span>, <span class="tag">mark</span>, <span class="tag">audio</span>, <span class="tag">video</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">font</span>:<span class="value"> inherit</span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">vertical-align</span>:<span class="value"> baseline</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="comment">/* HTML5 display-role reset for older browsers */</span></span><br><span class="line"><span class="tag">article</span>, <span class="tag">aside</span>, <span class="tag">details</span>, <span class="tag">figcaption</span>, <span class="tag">figure</span>, </span><br><span class="line"><span class="tag">footer</span>, <span class="tag">header</span>, <span class="tag">hgroup</span>, <span class="tag">menu</span>, <span class="tag">nav</span>, <span class="tag">section</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">display</span>:<span class="value"> block</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">line-height</span>:<span class="value"> <span class="number">1</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="tag">ol</span>, <span class="tag">ul</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">list-style</span>:<span class="value"> none</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="tag">blockquote</span>, <span class="tag">q</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">quotes</span>:<span class="value"> none</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"><span class="rule"><span class="attribute">blockquote</span>:<span class="value">before, blockquote:after,</span><br><span class="line">q:before, q:after &#123;</span><br><span class="line">	content: <span class="string">''</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">content</span>:<span class="value"> none</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">table</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">border-collapse</span>:<span class="value"> collapse</span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">border-spacing</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>3.CSS网格布局以及flex布局</p>
+<p>尽管兼容性相对较差，但对于开发快速原型以及对兼容性要求不高的产品开发效率是杠杠的</p>
+<p><a href="http://segmentfault.com/a/1190000002437544" target="_blank" rel="external">CSS Grid 介绍</a></p>
+<p><a href="http://www.w3cplus.com/css3/designing-css-layout-with-flexbox.html" target="_blank" rel="external">CSS Flex 介绍</a></p>
+<p>4.巧妙利用checkbox和radio的checked属性</p>
+<p>css的伪元素操作是网页开发的一个利器，巧妙利用不仅能加快网页开发速度，而且经常能把一些复杂的功能简单化，像下面这个例子便是利用了伪元素做的一个动画开关</p>
+<p></p><p data-height="140" data-theme-id="16692" data-slug-hash="doezLX" data-default-tab="result" data-user="Dreaking" class="codepen">See the Pen <a href="http://codepen.io/Dreaking/pen/doezLX/" target="_blank" rel="external">doezLX</a> by Simplefatty (<a href="http://codepen.io/Dreaking" target="_blank" rel="external">@Dreaking</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.</p><p></p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+<p>5.避免css样式的嵌套地狱</p>
+<p>我们平时在书写css代码的时候有时为了选择某个dom操作样式往往会用嵌套的方式来增强样式的约束力，如<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">'demo'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">p</span> <span class="attribute">id</span>=<span class="value">'demo'</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>此时的选择器约束性是  p &lt; div p &lt; .demo p &lt; #demo</p>
+<p>OOCSS建议避免在页面中用<code>ID</code>来控制样式，因此我们更多的会用<code>class</code>的方式来控制，但这种时候应该尽量避免样式的嵌套低于，特别是在书写LESS或SASS代码时，许多程序员可能因为代码习惯轻易的便会将css嵌套上数层甚至更多，从效能和维护的角度考虑，一般css嵌套应该控制在2-3层最佳,如果要控制较深层的样式建议给要控制的Dom加入一个新的样式控制.</p>
+<h2 id="HTML编写技巧">HTML编写技巧</h2><p>1.学会Zen Coding 和HAML语法</p>
+<p>现代IDE都会自带一些自动补全功能，这能大幅提升我们代码的编写速度,但还可以更快，通过Zen Coding 和HAML语法，sublime,idea等诸多IDE都会自带zencoding语法,你可以迅速的创建DOM元素<br>如<code>ul&gt;li.list*50</code>按下tab键能快速创建50个li元素：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"list"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line">			……</span><br><span class="line">	<span class="tag">&lt;<span class="title">li</span> <span class="attribute">class</span>=<span class="value">"list"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>2.编写经常显示隐藏的元素（会造成浏览器重绘）时使用绝对定位来布局</p>
+<p>DOM结构的优化会给页面带来性能上的优化，减少页面重绘也是要时刻的优化点。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/07/remove-unnecessary-watcher/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          AngularJS实践之优化你的$watch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/02/shallow-clone-and-deep-clone/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浅析javascript中传值和传址</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="javascript-css-html-coding-skill" data-title="编写良好javascript,css,html的方法技巧（持续更新……）" data-url="http://onestepto.cn/2015/08/02/javascript-css-html-coding-skill/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"onestepto"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 One Step To
+    	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

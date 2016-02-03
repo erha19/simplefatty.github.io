@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AngularJS实践之优化你的$watch | One Step To</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="baidu-site-verification" content="dTVxXStghn" />
+  <meta name="description" content="AngularJS的双向绑定机制带来了思维方式的转变:不再是DOM驱动，而是以Model为核心.
+双向绑定机制能为我们提供很多方便的功能,但这种双向绑定需要我们时刻监控着整个页面的变化,这便是AngularJS中的脏检测机制$digest.
+由此我们不难得到此结论:越多的绑定的值需要监控,耗费在监控上的资源就越多,这也是往往导致我们Angular应用效果差的原因之一
+在此我重点探讨如何去优化我们的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS实践之优化你的$watch">
+<meta property="og:url" content="http://onestepto.cn/2015/09/07/remove-unnecessary-watcher/index.html">
+<meta property="og:site_name" content="One Step To">
+<meta property="og:description" content="AngularJS的双向绑定机制带来了思维方式的转变:不再是DOM驱动，而是以Model为核心.
+双向绑定机制能为我们提供很多方便的功能,但这种双向绑定需要我们时刻监控着整个页面的变化,这便是AngularJS中的脏检测机制$digest.
+由此我们不难得到此结论:越多的绑定的值需要监控,耗费在监控上的资源就越多,这也是往往导致我们Angular应用效果差的原因之一
+在此我重点探讨如何去优化我们的">
+<meta property="og:updated_time" content="2015-10-20T02:37:19.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS实践之优化你的$watch">
+<meta name="twitter:description" content="AngularJS的双向绑定机制带来了思维方式的转变:不再是DOM驱动，而是以Model为核心.
+双向绑定机制能为我们提供很多方便的功能,但这种双向绑定需要我们时刻监控着整个页面的变化,这便是AngularJS中的脏检测机制$digest.
+由此我们不难得到此结论:越多的绑定的值需要监控,耗费在监控上的资源就越多,这也是往往导致我们Angular应用效果差的原因之一
+在此我重点探讨如何去优化我们的">
+  
+    <link rel="alternative" href="/atom.xml" title="One Step To" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/user_ic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">One Step To</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+		
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">存档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							<div align="center"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3194371&c=9583426" alt="AmazingCounters.com"></div>
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/Css/" style="font-size: 10px;">Css</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Requirejs/" style="font-size: 10px;">Requirejs</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/css3/" style="font-size: 10px;">css3</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/指令/" style="font-size: 10px;">指令</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">One Step To</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/user_ic.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">One Step To</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">存档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-remove-unnecessary-watcher" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/07/remove-unnecessary-watcher/" class="article-date">
+  	<time datetime="2015-09-07T14:45:46.000Z" itemprop="datePublished">2015-09-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS实践之优化你的$watch
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AngularJS的双向绑定机制带来了思维方式的转变:不再是DOM驱动，而是以Model为核心.</p>
+<p>双向绑定机制能为我们提供很多方便的功能,但这种双向绑定需要我们时刻监控着整个页面的变化,这便是AngularJS中的脏检测机制<code>$digest</code>.</p>
+<p>由此我们不难得到此结论:越多的绑定的值需要监控,耗费在监控上的资源就越多,这也是往往导致我们Angular应用效果差的原因之一</p>
+<p>在此我重点探讨如何去优化我们的应用,如何通过优化$watch list来提升我们应用的性能.</p>
+<h1 id="脏数据检查_!=_轮询检查更新">脏数据检查 != 轮询检查更新</h1><p>常见的对ng脏检查的理解是是定时轮询去检查model是否变更.</p>
+<p>其实ng只有在指定事件触发后，才进入<code>$digest cycle</code> ：</p>
+<ul>
+<li>DOM事件，譬如用户输入文本，点击按钮等。( ng-click ) </li>
+<li>XHR响应事件 ( $http ) </li>
+<li>浏览器Location变更事件 ( $location ) </li>
+<li>Timer事件( $timeout , $interval ) </li>
+<li>执行 $digest() 或 $apply()</li>
+</ul>
+<p>提速 $digest cycle是提升网页性能的关键点</p>
+<p>提速的途径一般是减少和尽快完成$digest,网页中的$watch便是影响$digest的关键因素.</p>
+<h1 id="哪些操作会产生$watch?">哪些操作会产生$watch?</h1><ul>
+<li>AngularJS中的表达式,如<code>{ { text } }</code></li>
+<li>AngularJS中的大部分指令,如<code>ngRepeat</code>,<code>ngBind</code>,<code>ngShow/ngHide</code>,<code>ngIf</code>等</li>
+<li>显式使用$watch函数监控数据变化</li>
+</ul>
+<p>下面讨论在这些产生$watch的操作如何进行优化<br><a id="more"></a></p>
+<p>开发过程中有时为了实现某些业务功能,免不了需要显示使用$scope.$watch函数来监控某些值的变化.</p>
+<p>使用方法如:$scope.$watch(watchExpression, modelChangeCallback) , watchExpression可以是String或Function.</p>
+<h1 id="及时销毁代码中的$watch">及时销毁代码中的$watch</h1><p>$watch函数执行后会返回一个释放这个$watch的函数,对于那些不需要再使用到的$watch,尽早释放也会是一个不错的实践.</p>
+<p>代码如下:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var unwatch = <span class="variable">$scope</span>.<span class="variable">$watch</span>(<span class="string">"someKey"</span>, <span class="keyword">function</span>(newValue, oldValue)&#123;</span><br><span class="line">  //do sth...</span><br><span class="line">  if(someCondition)&#123;</span><br><span class="line">    //当不需要的时候,及时移除watch</span><br><span class="line">    unwatch();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="避免深度watch，_即第三个参数为true">避免深度watch， 即第三个参数为true</h1><p>$watch的第三个参数设置为true,即可deep watch.不过有时候其实不想或者不需要监听collection的全部属性</p>
+<p>只要监视其中的一个或者几个,这时候通过for循环虽然可以循环$watch不过明显太挫.</p>
+<p>通过下面这种写法就可以监控一个collection的单独一个object属性.</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$scope</span>.people = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"groupname"</span>: <span class="string">"g1"</span>, </span><br><span class="line">        <span class="string">"persions"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"id"</span>: <span class="number">1</span>, </span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"bill"</span></span><br><span class="line">            &#125;, </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"id"</span>: <span class="number">2</span>, </span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"bill2"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;, </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"groupname"</span>: <span class="string">"g2"</span>, </span><br><span class="line">        <span class="string">"persions"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"id"</span>: <span class="number">3</span>, </span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"bill3"</span></span><br><span class="line">            &#125;, </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"id"</span>: <span class="number">4</span>, </span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"bill4"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line"><span class="variable">$scope</span>.<span class="variable">$watch</span>(<span class="keyword">function</span>(<span class="variable">$scope</span>) &#123;</span><br><span class="line">    return <span class="variable">$scope</span>.people.map(function(obj) &#123;</span><br><span class="line">        return obj.persions.map(function(g)&#123;</span><br><span class="line">            return g.name</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="keyword">function</span> (newVal) &#123;</span><br><span class="line">    <span class="variable">$scope</span>.count++;</span><br><span class="line">    <span class="variable">$scope</span>.msg = <span class="string">'person name was changed'</span>+ <span class="variable">$scope</span>.count;</span><br><span class="line">&#125;, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="减少watch的变量长度">减少watch的变量长度</h1><p>如下,angular不会仅对  建立watcher，而是对整个p标签. 双括号应该被span包裹,因为watch的是外部element</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">p</span>&gt;</span>plain text other </span><span class="expression">&#123;&#123;<span class="variable">value</span>&#125;&#125;</span><span class="xml"> plain text other<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">//改为:</span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>plain text other <span class="tag">&lt;<span class="title">span</span> <span class="attribute">ng-bind</span>=<span class="value">'value'</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span> plain text other<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">//或</span><br><span class="line"><span class="tag">&lt;<span class="title">p</span>&gt;</span>plain text other <span class="tag">&lt;<span class="title">span</span>&gt;</span></span><span class="expression">&#123;&#123;<span class="variable">value</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">span</span>&gt;</span> plain text other<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="避免watchExpression中执行耗时操作">避免watchExpression中执行耗时操作</h1><p>  避免watchExpression中执行耗时操作,因为它在每次$digest都会执行1~2次.</p>
+<h1 id="避免watchExpression中操作dom-">避免watchExpression中操作dom.</h1><p> <del>同上,并且在此时操作DOM的价值是昂贵的.</del></p>
+<p>大部分时候可能我们会在watch中操作DOM是必须的,这里提到的应该是要尽量快速少量的去操作这些DOM. </p>
+<h1 id="ngIf/ngShow_,前者会移除DOM和对应的$watch-">ngIf/ngShow ,前者会移除DOM和对应的$watch.</h1><h1 id="进行单次绑定(BindOnce)">进行单次绑定(BindOnce)</h1><p>如下面的一段代码:</p>
+<p><code>html代码</code></p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">data-ng-controller</span>=<span class="value">"myController"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"people in peoples"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">div</span>&gt;</span> </span><span class="expression">&#123;&#123;<span class="variable">people.name</span>&#125;&#125;</span><span class="xml"> <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">div</span>&gt;</span> </span><span class="expression">&#123;&#123;<span class="variable">people.age</span>&#125;&#125;</span><span class="xml"> <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><code>js代码</code></p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'app'</span>).controller(<span class="string">'myController'</span>, <span class="keyword">function</span>(<span class="variable">$scope</span>) &#123;</span><br><span class="line">  <span class="variable">$scope</span>.peoples = [...];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>假设以上代码中的 $scope.peoples中有1000个数据</p>
+<p>则这个页面将会产生1000*2+1=2001个$watch.</p>
+<p>由于AngularJS的双向绑定机制,$digest会时刻监控页面中这些值的变化,很轻易的便能达到AngularJS的性能瓶颈(在社区中有这么一个经验，如果超过2000个watcher，就可能感觉到明显的卡顿，特别在IE8这种老旧浏览器上),像这种列表式的数据展示,我们通常是经常会用到的,而这些数据有往往只是一些加载进来的静态资源,双向绑定在展示上毫无用处可言,这时如果我们如果能单次绑定这些数据而不实时去监控它们的变化,网页性能是不是也一样会有所提高?</p>
+<p>在AngularJS1.3+的版本中为Angular表达式<code>{ {  } }</code>引入了新语法，以“::”作为前缀的表达式为单次绑定。(单次表达式在第一次$digest完成后，将不再计算（监测属性的变化）)</p>
+<p>对于上面的例子可以改为：</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">data-ng-controller</span>=<span class="value">"myController"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"people in peoples"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span>&gt;</span> </span><span class="expression">&#123;&#123;::<span class="variable">people.name</span>&#125;&#125;</span><span class="xml"> <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span>&gt;</span> </span><span class="expression">&#123;&#123;::<span class="variable">people.age</span>&#125;&#125;</span><span class="xml"> <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>对于1.3之前版本则可以采用一些开源项目里面封装好的一系列指令来实现(下面以Bindonce为例)</p>
+<p><a href="https://github.com/Pasvaz/bindonce" target="_blank" rel="external">Bindonce</a><br><a href="https://github.com/tadeuszwojcik/angular-once" target="_blank" rel="external">Angular-once</a></p>
+<h2 id="添加依赖">添加依赖</h2><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.<span class="keyword">module</span>(<span class="symbol">'com</span>.ngnice.app', [<span class="symbol">'pasvaz</span>.bindonce']);</span><br></pre></td></tr></table></figure>
+<p>添加完依赖后便可如下使用:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">data-ng-controller</span>=<span class="value">"myController"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">bindonce</span> <span class="attribute">ng-repeat</span>=<span class="value">"people in peoples"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">bo-text</span>=<span class="value">"people.name"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">bo-text</span>=<span class="value">"people.age"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>采用单次绑定的方式,页面上的每个people对象只绑定了一个$watch,$watch数量从2001个缩减到1001个.</p>
+<h2 id="如何检查页面$watch数量">如何检查页面$watch数量</h2><p>在控制台上复制下列代码执行即可看到$watch数量:</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWatchers</span><span class="params">(root)</span> &#123;</span></span><br><span class="line">  root = angular.element<span class="params">(root || document.documentElement)</span>;</span><br><span class="line">  var watcherCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getElemWatchers</span><span class="params">(element)</span> &#123;</span></span><br><span class="line">    var isolateWatchers = getWatchersFromScope<span class="params">(element.data<span class="params">()</span>.$isolateScope)</span>;</span><br><span class="line">    var scopeWatchers = getWatchersFromScope<span class="params">(element.data<span class="params">()</span>.$scope)</span>;</span><br><span class="line">    var watchers = scopeWatchers.<span class="built_in">concat</span><span class="params">(isolateWatchers)</span>;</span><br><span class="line">    angular.forEach<span class="params">(element.children<span class="params">()</span>, function <span class="params">(childElement)</span> &#123;</span><br><span class="line">      watchers = watchers.concat<span class="params">(getElemWatchers<span class="params">(angular.element<span class="params">(childElement)</span>)</span>)</span>;</span><br><span class="line">    &#125;)</span>;</span><br><span class="line">    return watchers;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getWatchersFromScope</span><span class="params">(scope)</span> &#123;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="params">(scope)</span> &#123;</span><br><span class="line">      return scope.$$watchers || [];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      return [];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return getElemWatchers<span class="params">(root)</span>;</span><br><span class="line">&#125;</span><br><span class="line">getWatchers<span class="params">()</span>.length;</span><br></pre></td></tr></table></figure>
+<p>或者安装chrome下的AngularJS拓展AngularJS Batarang也可以实时查看页面的<code>$watch</code>数量.</p>
+<h1 id="总结">总结</h1><p>AngularJS的双向绑定机制是建立在$digest脏检测基础上的,而$watch的数量是影响$digest的主要因素之一,在实践中移除不必要的$watch对应用性能的提升不容小觑,当页面上的$watch数量过多时,思考如果减少watch数量将会是一个不错的方向.</p>
+<p>有关AngularJS中$digest过程中的优化还有其他需要注意的方面,有时间再一一整理.</p>
+<h1 id="参考资料">参考资料</h1><p> <a href="http://www.cnblogs.com/whitewolf/p/AngularJS-remove-unused-watch.html" target="_blank" rel="external">破狼-AngularJS移除不必要的$watch</a></p>
+<p> <a href="http://www.tuicool.com/articles/IbeARf" target="_blank" rel="external">Angular性能优化心得</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/17/thinking-in-angularjs-if-i-have-a-jquery-background/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          由jQuery到AngularJS的思维转变[翻译]
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/08/02/javascript-css-html-coding-skill/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">编写良好javascript,css,html的方法技巧（持续更新……）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="remove-unnecessary-watcher" data-title="AngularJS实践之优化你的$watch" data-url="http://onestepto.cn/2015/09/07/remove-unnecessary-watcher/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"onestepto"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 One Step To
+    	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AngularJS 中的 Promise 和 设计模式[翻译] | One Step To</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="baidu-site-verification" content="dTVxXStghn" />
+  <meta name="description" content="原文:promises-and-design-patterns-in-angularjs;
+解决 Javascript 异步事件的传统方式是回调函数；调用一个方法，然后给它一个函数引用，当这个方法完结的时候执行这个函数引用。123$.get(&apos;api/gizmo/42&apos;, function(gizmo) &amp;#123;  console.log(gizmo); // or whatever&amp;#125">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS 中的 Promise 和 设计模式[翻译]">
+<meta property="og:url" content="http://onestepto.cn/2015/10/12/promises-and-design-patterns-in-angularjs/index.html">
+<meta property="og:site_name" content="One Step To">
+<meta property="og:description" content="原文:promises-and-design-patterns-in-angularjs;
+解决 Javascript 异步事件的传统方式是回调函数；调用一个方法，然后给它一个函数引用，当这个方法完结的时候执行这个函数引用。123$.get(&apos;api/gizmo/42&apos;, function(gizmo) &amp;#123;  console.log(gizmo); // or whatever&amp;#125">
+<meta property="og:image" content="http://onestepto.cn/img/promise-deferred-objects-in-javascript-pt1-theory-and-semantics.png">
+<meta property="og:updated_time" content="2015-11-08T17:17:29.360Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS 中的 Promise 和 设计模式[翻译]">
+<meta name="twitter:description" content="原文:promises-and-design-patterns-in-angularjs;
+解决 Javascript 异步事件的传统方式是回调函数；调用一个方法，然后给它一个函数引用，当这个方法完结的时候执行这个函数引用。123$.get(&apos;api/gizmo/42&apos;, function(gizmo) &amp;#123;  console.log(gizmo); // or whatever&amp;#125">
+  
+    <link rel="alternative" href="/atom.xml" title="One Step To" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/user_ic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">One Step To</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+		
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">存档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							<div align="center"><img border="0" src="http://cc.amazingcounters.com/counter.php?i=3194371&c=9583426" alt="AmazingCounters.com"></div>
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/Css/" style="font-size: 10px;">Css</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/Requirejs/" style="font-size: 10px;">Requirejs</a> <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/css3/" style="font-size: 10px;">css3</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/指令/" style="font-size: 10px;">指令</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">One Step To</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="/user_ic.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">One Step To</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">做人不装逼那跟咸鱼有什么区别</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">存档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-promises-and-design-patterns-in-angularjs" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/12/promises-and-design-patterns-in-angularjs/" class="article-date">
+  	<time datetime="2015-10-12T09:47:03.000Z" itemprop="datePublished">2015-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS 中的 Promise 和 设计模式[翻译]
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文:<a href="http://blog.xebia.com/2014/02/23/promises-and-design-patterns-in-angularjs/" target="_blank" rel="external">promises-and-design-patterns-in-angularjs</a>;</p>
+<p>解决 Javascript 异步事件的传统方式是回调函数；调用一个方法，然后给它一个函数引用，当这个方法完结的时候执行这个函数引用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.get(<span class="string">'api/gizmo/42'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">gizmo</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(gizmo); <span class="comment">// or whatever</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这看起来很不错，不过，也有缺点的；首先，合并或者链接多个异步过程十分复杂；要么就是大量的模板代码，要么就是可怕的回调地狱(一层套一层的回调):</p>
+<a id="more"></a>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="keyword">get</span>(<span class="string">'api/gizmo/42'</span>, <span class="function"><span class="keyword">function</span><span class="params">(gizmo)</span> </span>&#123;</span><br><span class="line">  $.<span class="keyword">get</span>(<span class="string">'api/foobars/'</span> + gizmo, <span class="function"><span class="keyword">function</span><span class="params">(foobar)</span> </span>&#123;</span><br><span class="line">    $.<span class="keyword">get</span>(<span class="string">'api/barbaz/'</span> + foobar, <span class="function"><span class="keyword">function</span><span class="params">(bazbar)</span> </span>&#123;</span><br><span class="line">      doSomethingWith(gizmo, foobar, bazbar);</span><br><span class="line">    &#125;, errorCallback);</span><br><span class="line">  &#125;, errorCallback);</span><br><span class="line">&#125;, errorCallback);</span><br></pre></td></tr></table></figure>
+<p>其实在 Javascript 中，有另外一种异步处理模式:更为巧妙，在 Javascript 里面经常被叫做 Promises， CommonJS 标准委员会于是发布了一个规范，就把这个 API 叫做 Promises 了。</p>
+<h2 id="Promise_背后的概念非常简单，有两部分:">Promise 背后的概念非常简单，有两部分:</h2><ul>
+<li>Deferreds，定义工作单元，</li>
+<li>Promises，从 Deferreds 返回的数据。<br><img src="img/promise-deferred-objects-in-javascript-pt1-theory-and-semantics.png" alt="promise-deferred-objects-in-javascript-pt1-theory-and-semantics"></li>
+</ul>
+<p>基本上，你会用 Deferred 作为通信对象，用来定义工作单元的开始，处理和结束三部分。</p>
+<p>Promise 是 Deferred 响应数据的输出；它有状态 (等待，执行和拒绝)，以及句柄，或叫做回调函数，反正就是那些在 Promise 执行，拒绝或者提示进程中会被调用的方法。</p>
+<p>Promise 不同于回调的很重要的一个点是，你可以在 Promise 状态变成执行(resolved)之后追加处理句柄。这就允许你传输数据，而忽略它是否已经被应用获取，然后缓存它，等等之类的操作，因此你可以对数据执行操作，而不管它是否已经或者即将可用。</p>
+<p>在之后的文章中，我们将会基于 AngularJS 来讲解 Promises 。AngularJS 的整个代码库很大程度上依赖于 Promise，包括框架以及你用它编写的应用代码。AngularJS 用的是它自己的 Promises 实现， $q 服务，又一个 Q 库的轻量实现。</p>
+<p>$q 实现了上面提到的所有 Deferred / Promise 方法，除此之外 $q 还有自己的实现: $q.defer()，用来创建一个新的 Deferred 对象； $q.all()，允许等待多 Promises 执行终了，还有方法 $q.when() 和 $q.reject()，具体我们之后会讲到。</p>
+<p>$q.defer() 返回一个 Deferred 对象，带有方法 resolve(), reject(), 和 notify()。Deferred 还有一个 promise 属性，这是一个 promise对象，可以用于应用内部传递。</p>
+<p>promise 对象有另外三个方法: .then()，是唯一 Promise 规范要求的方法，用三个回调方法作为参数；一个成功回调，一个失败回调，还有一个状态变化回调。</p>
+<p>$q 在 Promise 规范之上还添加了两个方法: catch()，可以用于定义一个通用方法，它会在 promise 链中有某个 promise 处理失败时被调用。还有 finally()，不管 promise 执行是成功或者失败都会执行。注意，这些不应该和 Javascript 的异常处理混淆或者并用: 在 promise 内部抛出的异常，不会被 catch() 俘获。(※貌似这里我理解错了)</p>
+<h2 id="Promise_简单例子">Promise 简单例子</h2><p>下面是使用 $q ，Deferred，和 Promise 放一起的简单例子。首先我要声明，本文中所有例子的代码都没有经过测试；而且也没有正确的引用 Angular 服务和依赖，之类的。不过我觉得对于启发你怎么玩，已经够好了。</p>
+<p>首先，我们先创建一个新的工作单元，通过 Deferred 对象，用 $q.defer():</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var deferred = <span class="variable">$q</span>.defer();</span><br></pre></td></tr></table></figure>
+<p>然后，我们从 Deferred 拿到 promise，给它追加一些行为。</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var promise = <span class="keyword">deferred</span>.promise;</span><br><span class="line"></span><br><span class="line">promise.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span></span> success(<span class="type">data</span>) &#123;</span><br><span class="line">  console.<span class="built_in">log</span>(<span class="type">data</span>);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span></span> error(msg) &#123;</span><br><span class="line">  console.error(msg);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>最后，我们假装做点啥，然后告诉 deferred 我们已经完成了:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deferred.<span class="built_in">resolve</span>(<span class="string">'all done!'</span>);</span><br></pre></td></tr></table></figure>
+<p>当然，这不需要真的异步，所以我们可以用 Angular 的 $timeout 服务(或者 Javascript 的 setTimeout，不过，在 Angular 应用中最好用 $timeout，这样你可以 mock/test 它)来假装一下。<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$timeout</span>(<span class="keyword">function</span>() &#123;</span><br><span class="line">  deferred.resolve(<span class="string">'All done... eventually'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br><span class="line">好了，有趣的是:我们可以追加很多个 <span class="keyword">then</span>() 到一个 promise 上，以及我们可以在 promise 被 resolved 之后追加 <span class="keyword">then</span>():</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">deferred</span> = $q.defer();</span><br><span class="line">var promise = <span class="keyword">deferred</span>.promise;</span><br><span class="line"></span><br><span class="line">// <span class="type">assign</span> behavior before resolving</span><br><span class="line">promise.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span></span> (<span class="type">data</span>) &#123;</span><br><span class="line">  console.<span class="built_in">log</span>(<span class="string">'before:'</span>, <span class="type">data</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">deferred</span>.resolve(<span class="string">'Oh look we\'re done already.'</span>)</span><br><span class="line"></span><br><span class="line">// <span class="type">assign</span> behavior after resolving</span><br><span class="line">promise.<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span></span> (<span class="type">data</span>) &#123;</span><br><span class="line">  console.<span class="built_in">log</span>(<span class="string">'after:'</span>, <span class="type">data</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>那，要是发生异常怎么办？我们用 deferred.reject()，它会出发 then() 的第二个函数，就像回调一样。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var deferred = <span class="variable">$q</span>.defer();</span><br><span class="line">var promise = deferred.promise;</span><br><span class="line"></span><br><span class="line">promise.<span class="keyword">then</span>(<span class="keyword">function</span> success(data) &#123;</span><br><span class="line">  console.log(<span class="string">'Success!'</span>, data);</span><br><span class="line">&#125;, <span class="keyword">function</span> error(msg) &#123;</span><br><span class="line">  console.error(<span class="string">'Failure!'</span>, msg);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">deferred.reject(<span class="string">'We failed :('</span>);</span><br><span class="line">不用 <span class="keyword">then</span>() 的第二个参数，还有另外一种选择，你可以用链式的 <span class="keyword">catch</span>()，在 promise 链中发生异常的时候它会被调用(可能在很多链之后)。</span><br></pre></td></tr></table></figure>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">promise</span><br><span class="line">  .<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span></span> success(<span class="type">data</span>) &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(<span class="type">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span></span> error(msg) &#123;</span><br><span class="line">    console.error(msg);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>作为一个附加，对于长耗时的处理(比如上传，长计算，批处理，等等)，你可以用 deferred.notify() 作为 then() 第三个参数，给 promise 一个监听来更新状态。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var deferred = <span class="variable">$q</span>.defer();</span><br><span class="line">var promise = deferred.promise;</span><br><span class="line"></span><br><span class="line">promise</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span> success(data) &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">function</span> error(error) &#123;</span><br><span class="line">    console.error(error);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">function</span> notification(notification) &#123;</span><br><span class="line">    console.info(notification);</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line"> var progress = <span class="number">0</span>;</span><br><span class="line"> var interval = <span class="variable">$interval</span>(<span class="keyword">function</span>() &#123;</span><br><span class="line">  if (progress &gt;= <span class="number">100</span>) &#123;</span><br><span class="line">    <span class="variable">$interval</span>.cancel(interval);</span><br><span class="line">    deferred.resolve(<span class="string">'All done!'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  progress += <span class="number">10</span>;</span><br><span class="line">  deferred.notify(progress + <span class="string">'%...'</span>);</span><br><span class="line"> &#125;, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="链式_Promise">链式 Promise</h2><p>之前我们已经看过了，你可以给一个 promise 追加多个处理(then())。Promise API 好玩的地方在于允许链式处理:</p>
+<figure class="highlight mercury"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">promise</span></span><br><span class="line">  .<span class="built_in">then</span>(doSomething)</span><br><span class="line">  .<span class="built_in">then</span>(doSomethingElse)</span><br><span class="line">  .<span class="built_in">then</span>(doSomethingMore)</span><br><span class="line">  .<span class="built_in">catch</span>(logError);</span><br></pre></td></tr></table></figure>
+<p>举个简单的例子，这允许你把你的函数调用切分成单纯的，单一目的方法，而不是一揽子麻团；还有另外一个好处是你可以在多 promise 任务中重用这些方法，就像你执行链式方法一样(比如说任务列表之类的)。</p>
+<p>如果你用前一个异步执行结果出发下一个异步处理，那就更牛X了。默认的，一个链式，像上面演示的那种，是会把前一个执行结果对象传递给下一个 then() 的。比如:</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">deferred</span> = $q.defer();</span><br><span class="line">var promise = <span class="keyword">deferred</span>.promise;</span><br><span class="line"></span><br><span class="line">promise</span><br><span class="line">  .<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(val)</span></span> &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(val);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'B'</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(val)</span></span> &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(val);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'C'</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(val)</span></span> &#123;</span><br><span class="line">    console.<span class="built_in">log</span>(val);</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">deferred</span>.resolve(<span class="string">'A'</span>);</span><br></pre></td></tr></table></figure>
+<p>这会在控制台输出以下结果:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A</span><br><span class="line"><span class="keyword">B</span><br><span class="line"></span>C</span><br></pre></td></tr></table></figure>
+<p>虽然例子简单，但是你有没有体会到如果 then() 返回另一个 promise 那种强大。这种情况下，下一个 then() 会在 promise 完结的时候被执行。这种模式可以用到把 HTTP 请求串上面，比如说(当一个请求依赖于前一个请求的结果的时候):</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var deferred = <span class="variable">$q</span>.defer();</span><br><span class="line">var promise = deferred.promise;</span><br><span class="line"></span><br><span class="line">// resolve it after a second</span><br><span class="line"><span class="variable">$timeout</span>(<span class="keyword">function</span>() &#123;</span><br><span class="line">  deferred.resolve(<span class="string">'foo'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">promise</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(one) &#123;</span><br><span class="line">    console.log(<span class="string">'Promise one resolved with '</span>, one);</span><br><span class="line"></span><br><span class="line">    var anotherDeferred = <span class="variable">$q</span>.defer();</span><br><span class="line"></span><br><span class="line">    // resolve after another second</span><br><span class="line"></span><br><span class="line">    <span class="variable">$timeout</span>(function() &#123;</span><br><span class="line">      anotherDeferred.resolve(<span class="string">'bar'</span>);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    return anotherDeferred.promise;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(two) &#123;</span><br><span class="line">    console.log(<span class="string">'Promise two resolved with '</span>, two);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>总结:</p>
+<p>Promise 链会把上一个 then 的返回结果传递给调用链的下一个 then (如果没有就是 undefined)</p>
+<p>如果 then 回掉返回一个 promise 对象，下一个 then 只会在这个 promise 被处理结束的时候调用。</p>
+<p>在链最后的 catch 为整个链式处理提供一个异常处理点</p>
+<p>在链最后的 finally 总是会被执行，不管 promise 被处理或者被拒绝，起清理作用</p>
+<h2 id="并行Promise的处理-Parallel_Promises_And_‘Promise-Ifying’_Plain_Values">并行Promise的处理-Parallel Promises And ‘Promise-Ifying’ Plain Values</h2><p>我还提到了 $q.all()，允许你等待并行的 promise 处理，当所有的 promise 都被处理结束之后，调用共同的回调。在 Angular 中，这个方法有两种调用方式: 以 Array 方式或 Object 方式。Array 方式接收多个 promise ，然后在调用 .then() 的时候使用一个数据结果对象，在结果对象里面包含了所有的 promise 结果，按照输入数组的顺序排列:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$q</span>.all([promiseOne, promiseTwo, promiseThree])</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(results) &#123;</span><br><span class="line">    console.log(results[<span class="number">0</span>], results[<span class="number">1</span>], results[<span class="number">2</span>]);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>第二种方式是接收一个 promise 集合对象，允许你给每个 promise 一个别名，在回调函数中可以使用它们(有更好的可读性):</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$q</span>.all(&#123; first: promiseOne, second: promiseTwo, third: promiseThree &#125;)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(results) &#123;</span><br><span class="line">    console.log(results.first, results.second, results.third);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>我建议使用数组表示法，如果你只是希望可以批处理结果，就是说，如果你把所有的结果都平等处理。而以对象方式来处理，则更适合需要自注释代码的时候。</p>
+<p>另一个有用的方法是 $q.when()，如果你想通过一个普通变量创建一个 promise ，或者你不清楚你要处理的对象是不是 promise 时非常有用。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$q</span>.<span class="keyword">when</span>(<span class="string">'foo'</span>)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(bar) &#123;</span><br><span class="line">    console.log(bar);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable">$q</span>.<span class="keyword">when</span>(aPromise)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(baz) &#123;</span><br><span class="line">    console.log(baz);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable">$q</span>.<span class="keyword">when</span>(valueOrPromise)</span><br><span class="line">  .<span class="keyword">then</span>(<span class="keyword">function</span>(boz) &#123;</span><br><span class="line">    // well you get the idea.</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="variable">$q</span>.<span class="keyword">when</span>() 在诸如服务中的缓存这种情况也很好用:</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'myApp'</span>).service(<span class="string">'MyService'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$q</span>, MyResource)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> cachedSomething;</span><br><span class="line"></span><br><span class="line">  this.getSomething = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cachedSomething) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable">$q</span>.when(cachedSomething);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// on first call, return the result of MyResource.get()</span></span><br><span class="line">    <span class="comment">// note that 'then()' is chainable / returns a promise,</span></span><br><span class="line">    <span class="comment">// so we can return that instead of a separate promise object</span></span><br><span class="line">    <span class="keyword">return</span> MyResource.get().<span class="variable">$promise</span></span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span><span class="params">(something)</span> </span>&#123;</span><br><span class="line">        cachedSomething = something</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后可以这样调用它:</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MyService.getSomething()</span><br><span class="line">    .<span class="keyword">then</span>(<span class="function"><span class="keyword">function</span><span class="params">(something)</span></span> &#123;</span><br><span class="line">        console.<span class="built_in">log</span>(something);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="AngularJS_中的实际应用">AngularJS 中的实际应用</h2><p>在 Angular 的 I/O 中，大多数会返回 promise 或者 promise-compatible(then-able)对象，但是，都挺奇怪的。$http 文档 说，它会返回一个 HttpPromise 对象，嗯，确实是 promise，但是有两个额外的(有用的)方法，应该不会吓到 jQuery 用户。它定义了 success() 和 error() ，用来分别对应 then() 的第一和第二个参数。</p>
+<p>Angular 的 $resource 服务，用于 REST-endpoints 的 $http 封装，同样有点奇怪；通用方法(get(),save()之类的四个)接收第二和第三个参数作为 success 和 error 回调，同时它们还返回一个对象，当请求被处理之后，会往其中填充请求的数据。它不会直接返回 promise 对象；相反，通过 get() 方法返回的对象有一个属性 $promise，用来暴露 promise 对象。</p>
+<p>一方面，这和 $http 不符，并且 Angular 的所有东西都是/应该是 promise，不过另一方面，它允许开发者简单的把 $resource.get() 的结果指派给 $scope。原先，开发者可以给 $scope 指定任何 promise，但是从 Angular 1.2 开始被定义为过时了:请看this commit where it was deprecated。</p>
+<p>我个人来说，我更喜欢统一的 API，所以我把所有的 I/O 操作都封装到了 Service 中，统一返回一个 promise 对象，不过调用 $resource 有点糙。下面是个例子:<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'fooApp'</span>)</span><br><span class="line">  .service(<span class="string">'BarResource'</span>, <span class="keyword">function</span> (<span class="variable">$resource</span>) &#123;</span><br><span class="line">    return <span class="variable">$resource</span>(<span class="string">'api/bar/:id'</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  .service(<span class="string">'BarService'</span>, <span class="keyword">function</span> (BarResource) &#123;</span><br><span class="line"></span><br><span class="line">    this.getBar = function (id) &#123;</span><br><span class="line">      return BarResource.get(&#123;</span><br><span class="line">        id: id</span><br><span class="line">      &#125;).<span class="variable">$promise</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这个例子有点晦涩，因为传递 id 参数给 BarResource 看起来有点多余，不过它也还是有道理的，比如你有一个复杂的对象，但只需要用它的 ID 属性来调用一个服务。上面的好处还在于，在你的 controller 中，你知道从 Service 返回来的所有东西都是 promise 对象；你不需要担心它到底是 promise 还是 resouce 或者是 HttpPromise，这能让你的代码更加一致，并且可预测 - 因为 Javascript 是弱类型，并且到目前为止，据我所知没有任何一款 IDE 能告诉你方法返回值的类型，它只能告诉你开发者写了什么注释，这点上面就非常重要了。</p>
+<h2 id="实际链式例子">实际链式例子</h2><p>我们的代码库有一部分是依赖于前一个调用的结果来执行的。Promise 非常适用这种情况，并且允许你书写易于阅读的代码，尽可能保持你的代码整洁。考虑如下例子:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'WebShopApp'</span>)</span><br><span class="line">  .controller(<span class="string">'CheckoutCtrl'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$log</span>, CustomerService, CartService, CheckoutService)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">calculateTotals</span><span class="params">(cart)</span> </span>&#123;</span><br><span class="line">      cart.total = cart.products.reduce(<span class="function"><span class="keyword">function</span><span class="params">(prev, current)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prev.price + current.price;</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> cart;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CustomerService.getCustomer(currentCustomer)</span><br><span class="line">      .then(CartService.getCart) <span class="comment">// getCart() needs a customer object, returns a cart</span></span><br><span class="line">      .then(calculateTotals)</span><br><span class="line">      .then(CheckoutService.createCheckout) <span class="comment">// createCheckout() needs a cart object, returns a checkout object</span></span><br><span class="line">      .then(<span class="function"><span class="keyword">function</span><span class="params">(checkout)</span> </span>&#123;</span><br><span class="line">        <span class="variable">$scope</span>.checkout = checkout;</span><br><span class="line">      &#125;)</span><br><span class="line">      .<span class="keyword">catch</span>(<span class="variable">$log</span>.error)</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>联合异步获取数据(customers, carts,创建 checkout)和处理同步数据(calculateTotals)；这个实现不知道，甚至不需要知道这些服务是不是异步的，它会等到方法之行结束，不论异步与否。在这个例子中，getCart()会从本地存储中获取数据， createCheckout() 会执行一个 HTTP 请求来确定产品的采购，诸如此类。不过从用户的视角来看(执行这个调用的人)，它不会关心这些；这个调用起作用了，并且它的状态非常明了，你只要记住前一个调用会将结果返回传递到下一个 then() 。</p>
+<p>当然，它就是自注释代码，并且很简洁。</p>
+<h2 id="测试_Promise_-_基于代码">测试 Promise - 基于代码</h2><p>测试 Promise 非常简单。你可以硬测，创建你的测试模拟对象，然后暴露 then() 方法，这种直接测法。但是，为了让事情简单，我只用了 $q 来创建 promise - 这是一个非常快的库。下面尝试演示如何模拟上面用到过的各种服务。注意，这非常冗长，不过，我还没有找出一个方法来解决它，除了在 promise 之外弄一些通用的方法(指针看起来更短更简洁,会比较受欢迎)。</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'The Checkout controller'</span>, <span class="keyword">function</span>() &#123;</span><br><span class="line"></span><br><span class="line">  beforeEach(module(<span class="string">'WebShopApp'</span>));</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should do something with promises'</span>, inject(function(<span class="variable">$controller</span>, <span class="variable">$q</span>, <span class="variable">$rootScope</span>) &#123;</span><br><span class="line"></span><br><span class="line">    // create mocks; in this case I use jasmine, which has been good enough for me so far as a mocking library.</span><br><span class="line">    var CustomerService = jasmine.createSpyObj(<span class="string">'CustomerService'</span>, [<span class="string">'getCustomer'</span>]);</span><br><span class="line">    var CartService = jasmine.createSpyObj(<span class="string">'CartService'</span>, [<span class="string">'getCart'</span>]);</span><br><span class="line">    var CheckoutService = jasmine.createSpyObj(<span class="string">'CheckoutService'</span>, [<span class="string">'createCheckout'</span>]);</span><br><span class="line"></span><br><span class="line">    var <span class="variable">$scope</span> = <span class="variable">$rootScope</span>.<span class="variable">$new</span>();</span><br><span class="line">    var <span class="variable">$log</span> = jasmine.createSpyObj(<span class="string">'$log'</span>, [<span class="string">'error'</span>]);</span><br><span class="line"></span><br><span class="line">    // Create deferreds for each of the (promise-based) services</span><br><span class="line">    var customerServiceDeferred = <span class="variable">$q</span>.defer();</span><br><span class="line">    var cartServiceDeferred = <span class="variable">$q</span>.defer();</span><br><span class="line">    var checkoutServiceDeferred = <span class="variable">$q</span>.defer();</span><br><span class="line"></span><br><span class="line">    // Have the mocks return their respective deferred<span class="string">'s promises</span><br><span class="line">    CustomerService.getCustomer.andReturn(customerServiceDeferred.promise);</span><br><span class="line">    CartService.getCart.andReturn(cartServiceDeferred.promise);</span><br><span class="line">    CheckoutService.createCheckout.andReturn(checkoutServiceDeferred.promise);</span><br><span class="line"></span><br><span class="line">    // Create the controller; this will trigger the first call (getCustomer) to be executed,</span><br><span class="line">    // and it will hold until we start resolving promises.</span><br><span class="line">    $controller("CheckoutCtrl", &#123;</span><br><span class="line">      $scope: $scope,</span><br><span class="line">      CustomerService: CustomerService,</span><br><span class="line">      CartService: CartService,</span><br><span class="line">      CheckoutService: CheckoutService</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // Resolve the first customer.</span><br><span class="line">    var firstCustomer = &#123;id: "customer 1"&#125;;</span><br><span class="line">    customerServiceDeferred.resolve(firstCustomer);</span><br><span class="line"></span><br><span class="line">    // ... However: this *will not* trigger the '</span>then()<span class="string">' callback to be called yet;</span><br><span class="line">    // we need to tell Angular to go and run a cycle first:</span><br><span class="line"></span><br><span class="line">    $rootScope.$apply();</span><br><span class="line"></span><br><span class="line">    expect(CartService.getCart).toHaveBeenCalledWith(firstCustomer);</span><br><span class="line"></span><br><span class="line">    // setup the next promise resolution</span><br><span class="line">    var cart = &#123;products: [ &#123; price: 1 &#125;, &#123; price: 2 &#125; ]&#125;</span><br><span class="line">    cartServiceDeferred.resolve(cart);</span><br><span class="line"></span><br><span class="line">    // apply the next '</span>then<span class="string">'</span><br><span class="line">    $rootScope.$apply();</span><br><span class="line"></span><br><span class="line">    var expectedCart = angular.copy(cart);</span><br><span class="line">    cart.total = 3;</span><br><span class="line"></span><br><span class="line">    expect(CheckoutService.createCheckout).toHaveBeenCalledWith(expectedCart);</span><br><span class="line"></span><br><span class="line">    // Resolve the checkout service</span><br><span class="line">    var checkout = &#123;total: 3&#125;; // doesn'</span>t really matter</span><br><span class="line">    checkoutServiceDeferred.resolve(checkout);</span><br><span class="line"></span><br><span class="line">    // apply the next <span class="string">'then'</span></span><br><span class="line">    <span class="variable">$rootScope</span>.<span class="variable">$apply</span>();</span><br><span class="line"></span><br><span class="line">    expect(<span class="variable">$scope</span>.checkout).toEqual(checkout);</span><br><span class="line"></span><br><span class="line">    expect(<span class="variable">$log</span>.error).not.toHaveBeenCalled();</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，测试 promise 的代码比它自己本身要长十倍;我不知道是否/或者有更简单的代码能达到同样目的，不过，也许这里应该还有我没找到(或者发布)的库。</p>
+<p>要获取完整的测试覆盖，需要为三个部分都编写测试代码，从失败到处理结束，一个接一个，确保异常被记录。虽然代码中没有很清楚演示，但是代码/处理实际上会有许多分支；每个 promise 到最后都会被解决或者拒绝；真或假，或者被建立分支。不过，测试的粒度到底是由你决定的。</p>
+<p>我希望这篇文章给大家带来一些理解 promise 的启示，以及教会怎样结合 Angular 来使用 promise。我觉得我只摸到了 一些皮毛，包括在这篇文章以及在到目前为止我所做过的 AngularJS 工程上;promise 能够拥有如此简单的 API，如此简单的概念，并且对大多数 Javascript 应用来说，有如此强大的力量和影响有点难以置信。结合高水平的通用方法，代码库，promise 可以让你写出更干净，易于维护和易于扩展的代码；添加一个句柄，改变它，改变实现方式，所有这些东西都很容易，如果你对 promise 的概念已经理解了的话。</p>
+<p>从这点考虑，NodeJS 在开发早期就抛弃了 promise 而采用现在这种回调方式，我觉得非常古怪;当然我还没有完全深入理解它，但是看起来好像是因为性能问题，不符合 Node 的原本目标的缘故。如果你把 NodeJS 当成一个底层的库来看的话，我觉得还是很有道理的；有大量的库可以为 Node 添加高级的 promise API(比如之前提到的 Q).</p>
+<p>还有一点请记住，这篇文章是以 AngularJS 为基础的，但是，promises 和 类promise 编程方式已经在 Javascript 库中存在好几年了；jQuery ，Deferreds 早在 jQuery 1.5 (1月 2011) 就被添加进来。虽然看起来一样，但不是所有插件都能用。</p>
+<p>同样，Backbone.js 的 Model Api 也暴露了 promise 在它的方法中(save() 之类)，但是，以我的理解，它貌似没有沿着模型事件真正的起作用。也有可能我是错的，因为已经有那么一段时间了。</p>
+<p>如果开发一个新的 webapp 的时候，我肯定会推荐基于 promise 的前端应用的，因为它让代码看起来非常整洁，特别是结合函数式编程范式。还有更多功能强劲的编程模式可以在 Reginald Braithwaite 的 Javascript Allongé book 中找到，你可以从 LeanPub 拿到免费的阅读副本；还有另外一些比较有用的基于 promise 的代码。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/16/think-2015-10-16/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          生日随笔
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/17/thinking-in-angularjs-if-i-have-a-jquery-background/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">由jQuery到AngularJS的思维转变[翻译]</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="promises-and-design-patterns-in-angularjs" data-title="AngularJS 中的 Promise 和 设计模式[翻译]" data-url="http://onestepto.cn/2015/10/12/promises-and-design-patterns-in-angularjs/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"onestepto"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 One Step To
+    	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
