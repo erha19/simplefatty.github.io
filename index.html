@@ -157,6 +157,7 @@
 <p>操作成功后即可在控制台查看渲染出来的xml文件</p>
 <p><img src="img/prerender-eg.png" alt="Prerender"></p>
 <p><a href="https://prerender.io/raw-html?url=http%3A%2F%2Fsimplefatty.cn%2Farticle%2F56c53b11dcfb13946159c255&amp;adaptiveType=desktop" target="_blank" rel="external">XML文件</a></p>
+<p>当然,你还可以在你的页面加入<code>&lt;script&gt; window.prerenderReady = false; &lt;/script&gt;</code>,在回调结束时加上<code>window.prerenderReady = true;</code>来通知Prerender你完成页面,可以开始来渲染xml啦~一般写在ajax回调完成的时候.</p>
 
       
     </div>

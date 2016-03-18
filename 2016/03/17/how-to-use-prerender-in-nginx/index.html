@@ -17,7 +17,7 @@ Prerender官方提供了免费的250个页面缓存,当然绑定">
 下面基于Nginx介绍一下Prerender的使用方法,其他使用方法可以查看文档
 Prerender官方提供了免费的250个页面缓存,当然绑定">
 <meta property="og:image" content="http://onestepto.cn/img/prerender-eg.png">
-<meta property="og:updated_time" content="2016-03-18T02:36:03.866Z">
+<meta property="og:updated_time" content="2016-03-18T03:12:03.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Prerender.io解决Angular页面SEO问题">
 <meta name="twitter:description" content="AngularJs作为今年较为流行的主流框架之一,在开发单页应用上有着高效便捷的特点,但由于Ajax页面在SEO方面并不不友好,这让很多开发者很是烦恼,在开发我的博客的时候我也考虑到了这个问题,经过多方查阅资料,最终找到了Prerender.io这个东西.
@@ -174,6 +174,7 @@ Prerender官方提供了免费的250个页面缓存,当然绑定">
 <p>操作成功后即可在控制台查看渲染出来的xml文件</p>
 <p><img src="img/prerender-eg.png" alt="Prerender"></p>
 <p><a href="https://prerender.io/raw-html?url=http%3A%2F%2Fsimplefatty.cn%2Farticle%2F56c53b11dcfb13946159c255&amp;adaptiveType=desktop" target="_blank" rel="external">XML文件</a></p>
+<p>当然,你还可以在你的页面加入<code>&lt;script&gt; window.prerenderReady = false; &lt;/script&gt;</code>,在回调结束时加上<code>window.prerenderReady = true;</code>来通知Prerender你完成页面,可以开始来渲染xml啦~一般写在ajax回调完成的时候.</p>
 
       
     </div>
