@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="One Step To">
 <meta property="og:description" content="今天去面了阿里巴巴广州UC总部的前端工程师职位，感觉这份笔试题还是出的挺有意思的，考完趁热反思一下自己做题过程的一些问题，稍作总结
 如我一开始想的，笔试的题目果然没有考所谓的计算机网络，数据逻辑那些要太多去背的东西，下面列出的题目不按顺序，想到哪写到哪~有想法的欢迎在评论区指正">
-<meta property="og:updated_time" content="2016-03-18T02:38:25.673Z">
+<meta property="og:updated_time" content="2016-03-19T08:45:59.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里巴巴2017届实习生笔试题反思">
 <meta name="twitter:description" content="今天去面了阿里巴巴广州UC总部的前端工程师职位，感觉这份笔试题还是出的挺有意思的，考完趁热反思一下自己做题过程的一些问题，稍作总结
@@ -190,7 +190,9 @@
 <h2 id="第九题">第九题</h2><p>上面的流程能不能自动化？</p>
 <p>我提到了webpack，systemjs等模块加载器来打包应用，或者使用像gulp，grunt，fls等前端自动化构建工具来配置自动化构建架构，不过还是少说了一点服务端的东西。</p>
 <h2 id="第十题">第十题</h2><p>正则匹配 *.9game.cn,如在<code>内容内容 http://www.9game.cn/home/page 内容内容</code> 替换为 <code>内容内容 &lt;a&gt;http://www.9game.cn/home/page&lt;/a&gt; 内容内容</code>,(<a>$1</a>)写一段正则</p>
-<p>写的时候写的很简单…回来查了一下还是要考虑挺多东西的，错的一塌糊涂</p>
+<p>写的时候写的很简单…回来查了一下还是要考虑挺多东西的，错的一塌糊涂,应该这样写</p>
+<iframe frameborder="0" width="100%" height="215" src="https://jex.im/regulex/#!embed=true&flags=g&re=%5E(f%7Cht)(tp)(s)%3F(%5C%3A%5C%2F%5C%2F)%5Cw%2B(%5C.%5Cw%2B)*%3F(%5C.9game%5C.com)(%5C%2F%5Cw%2B)*%3F%24"></iframe>
+
 <h2 id="第十一题">第十一题</h2><p>如果上面的代码对性能要求很高，如何让其发布的时候错误率尽可能低，对代码质量做出有效性指标</p>
 <p>我提到了引入PDD测试驱动，提高测试的覆盖率，还有多分支开发，避免在主分支上产生问题，出现问题也能及时回滚</p>
 <h2 id="第十二题">第十二题</h2><p>网页开发出现问题的时候你如何定位问题，中你常用的调试工具或者其他辅助工具</p>
