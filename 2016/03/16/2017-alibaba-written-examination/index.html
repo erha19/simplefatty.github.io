@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="One Step To">
 <meta property="og:description" content="今天去面了阿里巴巴广州UC总部的前端工程师职位，感觉这份笔试题还是出的挺有意思的，考完趁热反思一下自己做题过程的一些问题，稍作总结
 如我一开始想的，笔试的题目果然没有考所谓的计算机网络，数据逻辑那些要太多去背的东西，下面列出的题目不按顺序，想到哪写到哪~有想法的欢迎在评论区指正">
-<meta property="og:updated_time" content="2016-03-19T08:45:59.739Z">
+<meta property="og:updated_time" content="2016-03-20T04:04:07.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里巴巴2017届实习生笔试题反思">
 <meta name="twitter:description" content="今天去面了阿里巴巴广州UC总部的前端工程师职位，感觉这份笔试题还是出的挺有意思的，考完趁热反思一下自己做题过程的一些问题，稍作总结
@@ -191,8 +191,20 @@
 <p>我提到了webpack，systemjs等模块加载器来打包应用，或者使用像gulp，grunt，fls等前端自动化构建工具来配置自动化构建架构，不过还是少说了一点服务端的东西。</p>
 <h2 id="第十题">第十题</h2><p>正则匹配 *.9game.cn,如在<code>内容内容 http://www.9game.cn/home/page 内容内容</code> 替换为 <code>内容内容 &lt;a&gt;http://www.9game.cn/home/page&lt;/a&gt; 内容内容</code>,(<a>$1</a>)写一段正则</p>
 <p>写的时候写的很简单…回来查了一下还是要考虑挺多东西的，错的一塌糊涂,应该这样写</p>
-<iframe frameborder="0" width="100%" height="215" src="https://jex.im/regulex/#!embed=true&flags=g&re=%5E(f%7Cht)(tp)(s)%3F(%5C%3A%5C%2F%5C%2F)%5Cw%2B(%5C.%5Cw%2B)*%3F(%5C.9game%5C.com)(%5C%2F%5Cw%2B)*%3F%24"></iframe>
+<p><code>^(f|ht)(tp)(s)?(\:\/\/)\w+(\.\w+)*?(\.9game\.com)(/[^\s]*)*?$</code></p>
+<iframe frameborder="0" width="100%" height="215" src="https://jex.im/regulex/#!embed=true&flags=g&re=%5E(f%7Cht)(tp)(s)%3F(%5C%3A%5C%2F%5C%2F)%5Cw%2B(%5C.%5Cw%2B)*%3F(%5C.9game%5C.com)(%2F%5B%5E%5Cs%5D*)*%3F%24"></iframe>
 
+<p>—-晚上又想了想,补充一下—-</p>
+<p>如果这里匹配的是所有URL的话应该怎么写,看了一下万网关于域名的定义</p>
+<ul>
+<li>域名可由英文字母（a-z，不区分大小写）、数字（0-9）、中文汉字以及连字符”-“（即中横线）构成，不能使用空格及特殊字符（如！、$、&amp;、?等）。“-” 不能单独注册或连续使用，不能放在开头或结尾。</li>
+</ul>
+<p><code>((f|ht)(tp)(s)?(\:\/\/))?([a-z0-9\x7F-\xFF]+(-)?\.)+(com|edu|org|biz|info|\name|museum|coop|aero|[a-z][a-z])(:\d+)?(\/[^.!,?;&quot;&#39;&lt;&gt;*()\[\]{}\s\u4E00-\u9FA5]+([.!,?][^.!,?;&quot;&#39;&lt;&gt;*()\[\]{}\s\u4E00-\u9FA5]+)*)?</code></p>
+<iframe frameborder="0" width="100%" height="500" src="https://jex.im/regulex/#!embed=true&flags=i&re=((f%7Cht)(tp)(s)%3F(%5C%3A%5C%2F%5C%2F))%3F(%5Ba-z0-9%5Cx7F-%5CxFF%5D%2B(-)%3F%5C.)%2B(com%7Cedu%7Corg%7Cbiz%7Cinfo%7C%5Cname%7Cmuseum%7Ccoop%7Caero%7C%5Ba-z%5D%5Ba-z%5D)(%3A%5Cd%2B)%3F(%5C%2F%5B%5E.!%2C%3F%3B%22'%3C%3E*()%5C%5B%5C%5D%7B%7D%5Cs%5Cu4E00-%5Cu9FA5%5D%2B(%5B.!%2C%3F%5D%5B%5E.!%2C%3F%3B%22'%3C%3E*()%5C%5B%5C%5D%7B%7D%5Cs%5Cu4E00-%5Cu9FA5%5D%2B)*)%3F"></iframe>
+
+<p>写了半天~后来发现有一种很短很方便的通用匹配方法</p>
+<p><code>[a-zA-z]+://[^\s]*</code></p>
+<p>不过这样的正则匹配比较宽松,而且是通过空格匹配分界,遇到中文中嵌入链接的时候没法准确匹配~而我上面写的匹配则相对严谨,而且结尾不能为几种特殊字符外还不能是中文和空格,就是长了点~</p>
 <h2 id="第十一题">第十一题</h2><p>如果上面的代码对性能要求很高，如何让其发布的时候错误率尽可能低，对代码质量做出有效性指标</p>
 <p>我提到了引入PDD测试驱动，提高测试的覆盖率，还有多分支开发，避免在主分支上产生问题，出现问题也能及时回滚</p>
 <h2 id="第十二题">第十二题</h2><p>网页开发出现问题的时候你如何定位问题，中你常用的调试工具或者其他辅助工具</p>
